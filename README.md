@@ -16,6 +16,7 @@ The goal is to observe and compare the efficiency of these common linear data st
 - `linear_search_vs_linked_lists.py` – main Python script  
 - `1000-most-common-words.txt` – input file with 1000 common words  
 - `results.pdf` – charts showing insertion and search time comparisons  
+> The `word_list_sorter.py` script was used to sort the words to create `sorted_list.txt` and provide index tracking. This was particularly useful for managing the pointer in the **doubly linked list** during testing.
 
 ---
 
