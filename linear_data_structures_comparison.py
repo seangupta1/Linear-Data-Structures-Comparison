@@ -1,7 +1,7 @@
 import random
 import time
 
-class sll_Node:
+class sll_Node:    
     def __init__(self, Val):
         self.Val = Val
         self.next = None
@@ -11,35 +11,35 @@ class Singly_Linked_List:
         self.Head = None
     
     def Insert(self, Val):
-        New_Node = sll_Node(Val)
-        if self.Head is None:
+        New_Node = sll_Node(Val) # Create new node and set value
+        if self.Head is None: # Set node to head if list is empty
             self.Head = New_Node
             return
         else:
-            if Val < self.Head.Val:
+            if Val < self.Head.Val: # Place node before head if value is less than head
                 New_Node.next = self.Head
                 self.Head = New_Node
                 return
             else:
                 Current = self.Head
-                while(Current.next != None and Current.next.Val < Val):
+                while(Current.next != None and Current.next.Val < Val): # Traverse the list until finding correct place for new node
                     Current = Current.next
-                if Current.next == None:
-                    Current.next = New_Node
+                if Current.next == None: # If we are at the end of the list
+                    Current.next = New_Node # Place new node at end of list
                     return
-                else:
-                    New_Node.next = Current.next
+                else: # Not at end of list
+                    New_Node.next = Current.next # Place node in current spot
                     Current.next = New_Node
                     return
     
     def Search(self, Key):
-        Current = self.Head
-        while(Current.next != None):
-            if(Current.Val > Key):
-                return False
-            if Current.Val == Key:
+        Current = self.Head # Start at list head
+        while(Current): # Traverse the list
+            if(Current.Val > Key): # Past spot where key should be so stop searching
+                return False 
+            if Current.Val == Key: # Found key
                 return True
-            Current = Current.next
+            Current = Current.next # Traverse the list
         return False
 
 class dll_Node:
@@ -54,14 +54,14 @@ class Doubly_Linked_List:
         self.Current = None
     
     def Insert(self, Val):
-        New_Node = dll_Node(Val)
-        if self.Head is None:
+        New_Node = dll_Node(Val) # Create new node and set value
+        if self.Head is None: # Set node to head if list is empty
             self.Head = New_Node
             self.Current = self.Head
             self.Current_Index = 0
             return
         else:
-            if Val < self.Head.Val:
+            if Val < self.Head.Val: # Place node before head if value is less than head
                 New_Node.next = self.Head
                 self.Head.prev = New_Node
                 self.Head = New_Node
@@ -70,33 +70,33 @@ class Doubly_Linked_List:
                 return
             else:
                 Current = self.Head
-                while(Current.next != None and Current.next.Val < Val):
+                while(Current.next != None and Current.next.Val < Val): # Traverse the list until finding correct place for new node
                     Current = Current.next
-                if Current.next == None:
-                    Current.next = New_Node
+                if Current.next == None: # If we are at the end of the list
+                    Current.next = New_Node # Place new node at end of list
                     New_Node.prev = Current
                     return
-                else:
-                    New_Node.next = Current.next
+                else: # Not at end of list
+                    New_Node.next = Current.next # Place node in current spot
                     New_Node.prev = Current
                     Current.next = New_Node
                     New_Node.next.prev = New_Node
                     return
     
     def Search(self, Key):
-        if self.Head == None:
+        if self.Head == None: # Check for empty list
             print("Doubly linked list is empty")
             return False
-        while self.Current.prev and Key < self.Current.Val:
+        while self.Current.prev and Key < self.Current.Val: # Traverse reverse
             self.Current = self.Current.prev
-        while self.Current.next and Key > self.Current.Val:
+        while self.Current.next and Key > self.Current.Val: # Traverse forward
             self.Current = self.Current.next
-        if Key == self.Current.Val:
+        if Key == self.Current.Val: # Key found
             return True
-        return False
+        return False # Key not found
 
 def Linear_Search(Arr, key):
-    for i in range(len(Arr)):
+    for i in range(len(Arr)): # Scan the array until key found or end reached
         if Arr[i] == key:
             return True
     return False
@@ -104,66 +104,67 @@ def Linear_Search(Arr, key):
 def list_test(filepath, random_words):
     words = []
 
-    start_time = time.time()
-    with open(filepath, 'r') as file:
+    start_time = time.time() # Start clock for import
+    with open(filepath, 'r') as file: # Load in file
         for line in file:
-            words.append(line)
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    elapsed_time_ms = elapsed_time * 1000
-    print(f"time to import as list = {elapsed_time_ms:.3f}")
+            words.append(line) # Add file words to list
+    end_time = time.time() # End clock
+    elapsed_time = end_time - start_time # Calculate elapsed time
+    elapsed_time_ms = elapsed_time * 1000 # Convert to milliseconds
+    print(f"time to import as list = {elapsed_time_ms:.3f}") # Print results
 
-    start_time = time.time()
-    for element in random_words:
-        Linear_Search(words, element)
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    elapsed_time_ms = elapsed_time * 1000
-    print(f"time to search as list = {elapsed_time_ms:.3f}")
+    start_time = time.time() # Start clock for search
+    for element in random_words: # Loop through words to search
+        Linear_Search(words, element) # Search for word
+    end_time = time.time() # End clock
+    elapsed_time = end_time - start_time # Calculate elapsed time
+    elapsed_time_ms = elapsed_time * 1000 # Convert to milliseconds
+    print(f"time to search as list = {elapsed_time_ms:.3f}") # Print results
 
 def singly_linked_list_test(filepath, random_words):
-    sll = Singly_Linked_List()
+    sll = Singly_Linked_List() # Initialize singly linked list
 
-    start_time = time.time()
-    with open(filepath, 'r') as file:
-        for line in file:
-            sll.Insert(line)
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    elapsed_time_ms = elapsed_time * 1000
-    print(f"time to import as singly linked list = {elapsed_time_ms:.3f}")
+    start_time = time.time() # Start clock for import
+    with open(filepath, 'r') as file: # Load in file
+        for line in file: # Loop through each line in file
+            sll.Insert(line) # Insert word into singly linked list
+    end_time = time.time() # End clock
+    elapsed_time = end_time - start_time # Calculate elapsed time
+    elapsed_time_ms = elapsed_time * 1000 # Convert to milliseconds
+    print(f"time to import as singly linked list = {elapsed_time_ms:.3f}") # Print results
 
-    start_time = time.time()
-    for element in random_words:
-        sll.Search(element)
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    elapsed_time_ms = elapsed_time * 1000
-    print(f"time to search as singly linked list = {elapsed_time_ms:.3f}")
+    start_time = time.time() # Start clock for search
+    for element in random_words: # Loop through each item
+        sll.Search(element) # Search for word in singly linked list
+    end_time = time.time() # End clock
+    elapsed_time = end_time - start_time # Calculate elapsed time
+    elapsed_time_ms = elapsed_time * 1000 # Convert to milliseconds
+    print(f"time to search as singly linked list = {elapsed_time_ms:.3f}") # Print results
 
 def doubly_linked_list_test(filepath, random_words):
-    dll = Doubly_Linked_List()
+    dll = Doubly_Linked_List() # Initialize doubly linked list
 
-    start_time = time.time()
+    start_time = time.time() # Start clock for import
     with open(filepath, 'r') as file:
-        for line in file:
-            dll.Insert(line)
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    elapsed_time_ms = elapsed_time * 1000
-    print(f"time to import as doubly linked list = {elapsed_time_ms:.3f}")
+        for line in file: # Loop through each line in file
+            dll.Insert(line) # Insert word into doubly linked list
+    end_time = time.time() # End clock
+    elapsed_time = end_time - start_time # Calculate elapsed time
+    elapsed_time_ms = elapsed_time * 1000 # Convert to milliseconds
+    print(f"time to import as doubly linked list = {elapsed_time_ms:.3f}") # Print results
 
-    start_time = time.time()
-    for element in random_words:
-        dll.Search(element)
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    elapsed_time_ms = elapsed_time * 1000
-    print(f"time to search as doubly linked list = {elapsed_time_ms:.3f}")
+    start_time = time.time() # Start clock for search
+    for element in random_words: # Loop through each item
+        dll.Search(element) # Search for word in doubly linked list
+    end_time = time.time() # End clock
+    elapsed_time = end_time - start_time # Calculate elapsed time
+    elapsed_time_ms = elapsed_time * 1000 # Convert to milliseconds
+    print(f"time to search as doubly linked list = {elapsed_time_ms:.3f}") # Print results
 
 if __name__ == "__main__":
-    filepath = 'HW 3/1000-most-common-words.txt'
+    filepath = '1000-most-common-words.txt' # Path to input file
 
+    # List of random words to search in the lists
     random_words = [
     "abacus", "abandon", "ability", "abnormal", "abolish", "absence", "absent", "absurd", "academy", "accelerate",
     "accent", "accept", "access", "accident", "acclaim", "acclimate", "accompany", "accomplish", "account", "accuse",
@@ -192,10 +193,10 @@ if __name__ == "__main__":
     "unclear", "unfold", "unique", "unwind", "update", "venture", "verify", "victory", "vivid", "wager",
     "wander", "weigh", "wholesome", "witness", "wonder", "warrant", "yield", "young", "zealous", "zenith"
     ]
-    random.shuffle(random_words)
+    random.shuffle(random_words) # Shuffle words for random search order
 
-    list_test(filepath, random_words)
-    print()
-    singly_linked_list_test(filepath, random_words)
-    print()
-    doubly_linked_list_test(filepath, random_words)
+    list_test(filepath, random_words) # Test with Python list
+    print() # Spacer between tests
+    singly_linked_list_test(filepath, random_words) # Test with singly linked list
+    print() # Spacer between tests
+    doubly_linked_list_test(filepath, random_words) # Test with doubly linked list
